@@ -243,11 +243,19 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
     [self setFloatingLabelText:floatingTitle];
 }
 
+/*
+************************************************
+************************************************
+	    KeyBellSoft modify code
+		Fabian Rosales developer
+************************************************
+************************************************
+*/
 - (CGRect)textRectForBounds:(CGRect)bounds
 {
     CGRect rect = [super textRectForBounds:bounds];
     if ([self.text length] || self.keepBaseline) {
-        rect = [self insetRectForBounds:rect];
+        rect = [self insetRectForBounds:rect isFirst:YES];
     }
     return CGRectIntegral(rect);
 }
@@ -256,16 +264,32 @@ static CGFloat const kFloatingLabelHideAnimationDuration = 0.3f;
 {
     CGRect rect = [super editingRectForBounds:bounds];
     if ([self.text length] || self.keepBaseline) {
-        rect = [self insetRectForBounds:rect];
+        rect = [self insetRectForBounds:rect isFirst:NO];
     }
     return CGRectIntegral(rect);
 }
 
-- (CGRect)insetRectForBounds:(CGRect)rect {
+- (CGRect)insetRectForBounds:(CGRect)rect isFirst:(BOOL)isFirst{
     CGFloat topInset = ceilf(_floatingLabel.bounds.size.height + _placeholderYPadding);
     topInset = MIN(topInset, [self maxTopInset]);
-    return CGRectMake(rect.origin.x, rect.origin.y + topInset / 2.0f, rect.size.width, rect.size.height);
+    if(isFirst)
+    {
+        return CGRectMake(rect.origin.x, rect.origin.y +16 / 2.0f, rect.size.width, rect.size.height);
+    }
+    else{
+        return CGRectMake(rect.origin.x, rect.origin.y + topInset / 2.0f, rect.size.width, rect.size.height);
+    }
 }
+/*
+************************************************
+************************************************
+	    KeyBellSoft modify code
+		Fabian Rosales developer
+************************************************
+************************************************
+*/
+
+
 
 - (CGRect)clearButtonRectForBounds:(CGRect)bounds
 {
